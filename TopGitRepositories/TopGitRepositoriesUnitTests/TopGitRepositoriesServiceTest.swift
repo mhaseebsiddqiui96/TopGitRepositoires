@@ -31,8 +31,7 @@ class TopGitRepositoriesServiceTest: XCTestCase {
     func test_fetch_requestDataFromClient() throws {
         
         //arrange
-        let client = HttpClientSpy()
-        let sut = TopGitRepositoriesService(client: client)
+        let (sut, client) = makeSUT()
         let url = URL(string: "https://sada-pay.com")!
         let urlReq = URLRequest(url: url)
         
@@ -46,8 +45,7 @@ class TopGitRepositoriesServiceTest: XCTestCase {
     
     func test_fetch_deliversErrorOnClientError() throws {
         
-        let client = HttpClientSpy()
-        let sut = TopGitRepositoriesService(client: client)
+        let (sut, client) = makeSUT()
 
         let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
         let expectedResult = NSError(domain: "some-domain", code: 400)
@@ -77,6 +75,12 @@ class TopGitRepositoriesServiceTest: XCTestCase {
             self.requestedURLs[request]?(error)
         }
         
+    }
+    
+    func makeSUT() -> (TopGitRepositoriesService, HttpClientSpy) {
+        let client = HttpClientSpy()
+        let sut = TopGitRepositoriesService(client: client)
+        return (sut, client)
     }
     
 }
