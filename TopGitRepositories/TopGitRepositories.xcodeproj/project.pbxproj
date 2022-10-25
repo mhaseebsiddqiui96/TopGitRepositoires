@@ -11,10 +11,11 @@
 		0F5BDF7D290454CB007CF067 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5BDF7C290454CB007CF067 /* Assets.xcassets */; };
 		0F5BDF80290454CB007CF067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5BDF7E290454CB007CF067 /* LaunchScreen.storyboard */; };
 		0FCD47262908545400BC8C30 /* GitRepositoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */; };
+		0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0F8336BA2908402A00E4BB3E /* PBXContainerItemProxy */ = {
+		0FCD47322908754100BC8C30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0F5BDF68290454C9007CF067 /* Project object */;
 			proxyType = 1;
@@ -29,8 +30,9 @@
 		0F5BDF7C290454CB007CF067 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F5BDF7F290454CB007CF067 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F5BDF81290454CB007CF067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F8336B62908402900E4BB3E /* TopGitRepositoriesUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopGitRepositoriesUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryItem.swift; sourceTree = "<group>"; };
+		0FCD472E2908754100BC8C30 /* TopGitRepositoriesUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopGitRepositoriesUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoriesServiceTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +43,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F8336B32908402900E4BB3E /* Frameworks */ = {
+		0FCD472B2908754100BC8C30 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -55,7 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				0F5BDF72290454C9007CF067 /* TopGitRepositories */,
-				0F8336B72908402900E4BB3E /* TopGitRepositoriesUnitTests */,
+				0FCD472F2908754100BC8C30 /* TopGitRepositoriesUnitTests */,
 				0F5BDF71290454C9007CF067 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,7 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				0F5BDF70290454C9007CF067 /* TopGitRepositories.app */,
-				0F8336B62908402900E4BB3E /* TopGitRepositoriesUnitTests.xctest */,
+				0FCD472E2908754100BC8C30 /* TopGitRepositoriesUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,9 +123,10 @@
 			path = Infrastructure;
 			sourceTree = "<group>";
 		};
-		0F8336B72908402900E4BB3E /* TopGitRepositoriesUnitTests */ = {
+		0FCD472F2908754100BC8C30 /* TopGitRepositoriesUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */,
 			);
 			path = TopGitRepositoriesUnitTests;
 			sourceTree = "<group>";
@@ -148,22 +151,22 @@
 			productReference = 0F5BDF70290454C9007CF067 /* TopGitRepositories.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0F8336B52908402900E4BB3E /* TopGitRepositoriesUnitTests */ = {
+		0FCD472D2908754100BC8C30 /* TopGitRepositoriesUnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F8336BC2908402A00E4BB3E /* Build configuration list for PBXNativeTarget "TopGitRepositoriesUnitTests" */;
+			buildConfigurationList = 0FCD47342908754100BC8C30 /* Build configuration list for PBXNativeTarget "TopGitRepositoriesUnitTests" */;
 			buildPhases = (
-				0F8336B22908402900E4BB3E /* Sources */,
-				0F8336B32908402900E4BB3E /* Frameworks */,
-				0F8336B42908402900E4BB3E /* Resources */,
+				0FCD472A2908754100BC8C30 /* Sources */,
+				0FCD472B2908754100BC8C30 /* Frameworks */,
+				0FCD472C2908754100BC8C30 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0F8336BB2908402A00E4BB3E /* PBXTargetDependency */,
+				0FCD47332908754100BC8C30 /* PBXTargetDependency */,
 			);
 			name = TopGitRepositoriesUnitTests;
 			productName = TopGitRepositoriesUnitTests;
-			productReference = 0F8336B62908402900E4BB3E /* TopGitRepositoriesUnitTests.xctest */;
+			productReference = 0FCD472E2908754100BC8C30 /* TopGitRepositoriesUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -179,8 +182,9 @@
 					0F5BDF6F290454C9007CF067 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
-					0F8336B52908402900E4BB3E = {
+					0FCD472D2908754100BC8C30 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 						TestTargetID = 0F5BDF6F290454C9007CF067;
 					};
 				};
@@ -199,7 +203,7 @@
 			projectRoot = "";
 			targets = (
 				0F5BDF6F290454C9007CF067 /* TopGitRepositories */,
-				0F8336B52908402900E4BB3E /* TopGitRepositoriesUnitTests */,
+				0FCD472D2908754100BC8C30 /* TopGitRepositoriesUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -214,7 +218,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F8336B42908402900E4BB3E /* Resources */ = {
+		0FCD472C2908754100BC8C30 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -233,20 +237,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F8336B22908402900E4BB3E /* Sources */ = {
+		0FCD472A2908754100BC8C30 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0F8336BB2908402A00E4BB3E /* PBXTargetDependency */ = {
+		0FCD47332908754100BC8C30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0F5BDF6F290454C9007CF067 /* TopGitRepositories */;
-			targetProxy = 0F8336BA2908402A00E4BB3E /* PBXContainerItemProxy */;
+			targetProxy = 0FCD47322908754100BC8C30 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -432,32 +437,47 @@
 			};
 			name = Release;
 		};
-		0F8336BD2908402A00E4BB3E /* Debug */ = {
+		0FCD47352908754100BC8C30 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X363N4R9JN;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TopGitRepositoriesUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TopGitRepositories.app/TopGitRepositories";
 			};
 			name = Debug;
 		};
-		0F8336BE2908402A00E4BB3E /* Release */ = {
+		0FCD47362908754100BC8C30 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X363N4R9JN;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TopGitRepositoriesUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -489,11 +509,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F8336BC2908402A00E4BB3E /* Build configuration list for PBXNativeTarget "TopGitRepositoriesUnitTests" */ = {
+		0FCD47342908754100BC8C30 /* Build configuration list for PBXNativeTarget "TopGitRepositoriesUnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0F8336BD2908402A00E4BB3E /* Debug */,
-				0F8336BE2908402A00E4BB3E /* Release */,
+				0FCD47352908754100BC8C30 /* Debug */,
+				0FCD47362908754100BC8C30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
