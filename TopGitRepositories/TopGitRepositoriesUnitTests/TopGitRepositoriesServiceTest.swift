@@ -96,6 +96,23 @@ class TopGitRepositoriesServiceTest: XCTestCase {
                 
     }
     
+    func test_fetch_deliversErrorOn200WithInvalidJSON() throws {
+        
+        let (sut, client) = makeSUT()
+
+        let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
+        let expectedResult = TopGitRepositoriesService.Error.invalidData
+        var receivedResult: TopGitRepositoriesService.Error?
+
+        sut.fetch(urlRequest: urlReq, completion: { err in
+            receivedResult = err
+        })
+        
+        client.completesWithSuccess(for: urlReq, code: 200, data: Data("invalid".utf8))
+        //assert
+        XCTAssert(receivedResult == expectedResult)
+    }
+    
     //MARK: - Helpers
     
     class HttpClientSpy: HTTPClient {
