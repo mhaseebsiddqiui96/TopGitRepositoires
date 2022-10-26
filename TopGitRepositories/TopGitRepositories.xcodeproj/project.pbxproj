@@ -16,6 +16,7 @@
 		0FCD47422909D93300BC8C30 /* TopGitRepositoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47412909D93300BC8C30 /* TopGitRepositoryService.swift */; };
 		0FCD47442909D96400BC8C30 /* GitRepositoryItemMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47432909D96400BC8C30 /* GitRepositoryItemMapper.swift */; };
 		0FCD47472909D99C00BC8C30 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47462909D99C00BC8C30 /* HttpClient.swift */; };
+		0FCD474A2909E1C200BC8C30 /* URLSessionClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47492909E1C200BC8C30 /* URLSessionClientTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		0FCD47412909D93300BC8C30 /* TopGitRepositoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryService.swift; sourceTree = "<group>"; };
 		0FCD47432909D96400BC8C30 /* GitRepositoryItemMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryItemMapper.swift; sourceTree = "<group>"; };
 		0FCD47462909D99C00BC8C30 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+		0FCD47492909E1C200BC8C30 /* URLSessionClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClientTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */,
+				0FCD47492909E1C200BC8C30 /* URLSessionClientTest.swift */,
 			);
 			path = TopGitRepositoriesUnitTests;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */,
+				0FCD474A2909E1C200BC8C30 /* URLSessionClientTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

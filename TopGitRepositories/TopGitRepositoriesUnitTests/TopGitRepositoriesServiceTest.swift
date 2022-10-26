@@ -8,10 +8,6 @@
 import XCTest
 @testable import TopGitRepositories
 
-
-
-
-
 class TopGitRepositoriesServiceTest: XCTestCase {
     
     func test_fetch_requestDataFromClient() throws {
