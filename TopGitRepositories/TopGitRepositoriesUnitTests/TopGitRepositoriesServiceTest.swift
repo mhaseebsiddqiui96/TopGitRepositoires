@@ -15,26 +15,21 @@ protocol HTTPClient {
     func perform(urlRequest: URLRequest, completion: @escaping(HttpClientResult) -> Void)
 }
 
-class TopGitRepositoriesService {
+class TopGitRepositoriesService: TopGitRepositoryServiceProtocol {
   
     let client: HTTPClient
-    
-    enum Error: Swift.Error {
-        case invalidData
-        case internetConnectivity
-    }
     
     init(client: HTTPClient) {
         self.client = client
     }
     
-    func fetch(urlRequest: URLRequest, completion: @escaping(Result<[GitRepositoryItem], Error>) -> Void) {
+    func fetch(urlRequest: URLRequest, completion: @escaping(Result<[GitRepositoryItem], GitRepositoryServiceError>) -> Void) {
         client.perform(urlRequest: urlRequest, completion: { result in
             switch result {
             case .success(let response):
                 completion(GitRepositoryItemMapper.map(response))
             case .failure:
-                completion(.failure(Error.internetConnectivity))
+                completion(.failure(.internetConnectivity))
             }
         })
     }
@@ -69,11 +64,11 @@ struct GitRepositoryItemMapper {
         }
     }
     
-    static func map(_ result: (data: Data, response: HTTPURLResponse)) -> Result<[GitRepositoryItem], TopGitRepositoriesService.Error>  {
+    static func map(_ result: (data: Data, response: HTTPURLResponse)) -> Result<[GitRepositoryItem], GitRepositoryServiceError>  {
         if result.response.statusCode == 200, let apiData = decodeResponse(from: result.data) {
             return .success(apiData.items?.map({$0.repositoyItem}) ?? [])
         } else {
-            return .failure(TopGitRepositoriesService.Error.invalidData)
+            return .failure(.invalidData)
         }
     }
     
@@ -113,8 +108,8 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         let (sut, client) = makeSUT()
 
         let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
-        let expectedResult = TopGitRepositoriesService.Error.internetConnectivity
-        var receivedResult: TopGitRepositoriesService.Error!
+        let expectedResult: GitRepositoryServiceError = .internetConnectivity
+        var receivedResult: GitRepositoryServiceError?
 
         sut.fetch(urlRequest: urlReq, completion: { result in
             switch result {
@@ -128,6 +123,7 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         client.completesWithError(for: urlReq, error: expectedResult)
         //assert
         XCTAssert(receivedResult == expectedResult)
+
     }
     
     
@@ -138,8 +134,8 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         [300, 400, 401, 500].forEach { code in
             
             let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
-            let expectedResult = TopGitRepositoriesService.Error.invalidData
-            var receivedResult: TopGitRepositoriesService.Error?
+            let expectedResult: GitRepositoryServiceError = .invalidData
+            var receivedResult: GitRepositoryServiceError?
 
             sut.fetch(urlRequest: urlReq, completion: { result in
                 switch result {
@@ -163,8 +159,8 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         let (sut, client) = makeSUT()
 
         let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
-        let expectedResult = TopGitRepositoriesService.Error.invalidData
-        var receivedResult: TopGitRepositoriesService.Error?
+        let expectedResult: GitRepositoryServiceError = .invalidData
+        var receivedResult: GitRepositoryServiceError?
 
         sut.fetch(urlRequest: urlReq, completion: { result in
             switch result {

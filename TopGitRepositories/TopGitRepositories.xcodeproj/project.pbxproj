@@ -12,6 +12,7 @@
 		0F5BDF80290454CB007CF067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5BDF7E290454CB007CF067 /* LaunchScreen.storyboard */; };
 		0FCD47262908545400BC8C30 /* GitRepositoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */; };
 		0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */; };
+		0FCD473F2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryItem.swift; sourceTree = "<group>"; };
 		0FCD472E2908754100BC8C30 /* TopGitRepositoriesUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopGitRepositoriesUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoriesServiceTest.swift; sourceTree = "<group>"; };
+		0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryServiceProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +106,8 @@
 		0F8336AF29083F7300E4BB3E /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */,
+				0FCD473D2909D13200BC8C30 /* Interfaces */,
+				0FCD473C2909D12100BC8C30 /* Entities */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -129,6 +132,22 @@
 				0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */,
 			);
 			path = TopGitRepositoriesUnitTests;
+			sourceTree = "<group>";
+		};
+		0FCD473C2909D12100BC8C30 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		0FCD473D2909D13200BC8C30 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCD473F2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift in Sources */,
 				0F5BDF74290454C9007CF067 /* AppDelegate.swift in Sources */,
 				0FCD47262908545400BC8C30 /* GitRepositoryItem.swift in Sources */,
 			);
