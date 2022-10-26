@@ -8,8 +8,9 @@
 import Foundation
 
 enum GitRepositoryServiceError: Swift.Error {
+    
     case invalidData
-    case internetConnectivity
+    case clientError(error: Error)
 }
 
 protocol TopGitRepositoryServiceProtocol {

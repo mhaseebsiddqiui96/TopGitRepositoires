@@ -20,8 +20,8 @@ class TopGitRepositoriesService: TopGitRepositoryServiceProtocol {
             switch result {
             case .success(let response):
                 completion(GitRepositoryItemMapper.map(response))
-            case .failure:
-                completion(.failure(.internetConnectivity))
+            case .failure(let err):
+                completion(.failure(.clientError(error: err)))
             }
         })
     }

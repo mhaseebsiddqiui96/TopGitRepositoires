@@ -30,7 +30,7 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         let (sut, client) = makeSUT()
 
         let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
-        let expectedResult: GitRepositoryServiceError = .internetConnectivity
+        let expectedResult: GitRepositoryServiceError = .clientError(error: NSError(domain: "any-domain", code: 400, userInfo: [:]))
         var receivedResult: GitRepositoryServiceError?
 
         sut.fetch(urlRequest: urlReq, completion: { result in
@@ -42,9 +42,14 @@ class TopGitRepositoriesServiceTest: XCTestCase {
             }
         })
         
-        client.completesWithError(for: urlReq, error: expectedResult)
+        client.completesWithError(for: urlReq, error: NSError(domain: "any-domain", code: 400, userInfo: [:]))
         //assert
-        XCTAssert(receivedResult == expectedResult)
+        switch (receivedResult, expectedResult) {
+        case (.clientError(let receivedError as NSError), .clientError(let expectedError as NSError)):
+            XCTAssert(receivedError.code == expectedError.code, "\(expectedError) \(receivedError.code)")
+        default:
+            XCTFail("Expected failure but got something else")
+        }
 
     }
     
@@ -70,7 +75,12 @@ class TopGitRepositoriesServiceTest: XCTestCase {
             
             client.completesWithSuccess(for: urlReq, code: code, data: Data())
             //assert
-            XCTAssert(receivedResult == expectedResult)
+            switch (receivedResult, expectedResult) {
+            case (.invalidData, .invalidData):
+                XCTAssert(true)
+            default:
+                XCTFail("Expected failure but got something else")
+            }
 
         }
                 
@@ -95,7 +105,12 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         
         client.completesWithSuccess(for: urlReq, code: 200, data: Data("invalid".utf8))
         //assert
-        XCTAssert(receivedResult == expectedResult)
+        switch (receivedResult, expectedResult) {
+        case (.invalidData, .invalidData):
+            XCTAssert(true)
+        default:
+            XCTFail("Expected failure but got something else")
+        }
     }
     
     func test_fetch_deliversListOfRepositoriesOn200WithValidJSON() throws {
@@ -186,5 +201,6 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         
         return resultant
     }
+    
     
 }

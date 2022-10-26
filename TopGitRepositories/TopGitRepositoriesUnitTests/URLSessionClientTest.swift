@@ -18,9 +18,9 @@ class URLSessionClient: HTTPClient {
     
     
     func perform(urlRequest: URLRequest, completion: @escaping (HttpClientResult) -> Void) {
-        let task = session.dataTask(with: urlRequest) { _, _, err in
-            if let err = err {
-                completion(.failure(err))
+        let task = session.dataTask(with: urlRequest) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
             }
         }
         
@@ -31,7 +31,8 @@ class URLSessionClient: HTTPClient {
 
 class URLSessionClientTest: XCTestCase {
 
-    func test_perform_deliversErrorOnRequestError() throws {
+    func test_perform_deliversFailureOnRequestError() throws {
+        
         URLProtocol.registerClass(URLProtocolStub.self)
         
         let urlRequest = URLRequest(url: URL(string: "https://sadapay.com")!)
@@ -41,6 +42,7 @@ class URLSessionClientTest: XCTestCase {
         var receivedError: NSError?
         
         URLProtocolStub.stub(error: expectedError, data: nil, response: nil, for: urlRequest.url!)
+        
         let expectation = expectation(description: "Fails with error")
         sut.perform(urlRequest: urlRequest) { result in
             switch result {
@@ -51,10 +53,43 @@ class URLSessionClientTest: XCTestCase {
             }
             expectation.fulfill()
         }
+        
         wait(for: [expectation], timeout: 1.0)
+        
         URLProtocol.unregisterClass(URLProtocolStub.self)
         XCTAssertEqual(receivedError?.code, expectedError.code)
     }
+    
+    func test_perform_deliversFailureOnInvalidStates() throws {
+        
+        URLProtocol.registerClass(URLProtocolStub.self)
+        
+        let urlRequest = URLRequest(url: URL(string: "https://sadapay.com")!)
+        let sut = URLSessionClient()
+        
+        
+        let expectedError = NSError(domain: "some-domain", code: 400)
+        var receivedError: NSError?
+        
+        URLProtocolStub.stub(error: expectedError, data: nil, response: nil, for: urlRequest.url!)
+        
+        let expectation = expectation(description: "Fails with error")
+        sut.perform(urlRequest: urlRequest) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected to have an error but found success instead!")
+            case .failure(let error as NSError):
+                receivedError = error
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+        
+        URLProtocol.unregisterClass(URLProtocolStub.self)
+        XCTAssertEqual(receivedError?.code, expectedError.code)
+    }
+
     
     //MARK: - Helpers
     
