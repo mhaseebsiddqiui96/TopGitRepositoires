@@ -13,6 +13,9 @@
 		0FCD47262908545400BC8C30 /* GitRepositoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */; };
 		0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */; };
 		0FCD473F2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */; };
+		0FCD47422909D93300BC8C30 /* TopGitRepositoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47412909D93300BC8C30 /* TopGitRepositoryService.swift */; };
+		0FCD47442909D96400BC8C30 /* GitRepositoryItemMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47432909D96400BC8C30 /* GitRepositoryItemMapper.swift */; };
+		0FCD47472909D99C00BC8C30 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47462909D99C00BC8C30 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,9 @@
 		0FCD472E2908754100BC8C30 /* TopGitRepositoriesUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopGitRepositoriesUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoriesServiceTest.swift; sourceTree = "<group>"; };
 		0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryServiceProtocol.swift; sourceTree = "<group>"; };
+		0FCD47412909D93300BC8C30 /* TopGitRepositoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryService.swift; sourceTree = "<group>"; };
+		0FCD47432909D96400BC8C30 /* GitRepositoryItemMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryItemMapper.swift; sourceTree = "<group>"; };
+		0FCD47462909D99C00BC8C30 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,8 @@
 		0F8336B129083FCA00E4BB3E /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				0FCD47452909D97C00BC8C30 /* Client */,
+				0FCD47402909D91E00BC8C30 /* Services */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -148,6 +156,31 @@
 				0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */,
 			);
 			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		0FCD47402909D91E00BC8C30 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0FCD47482909D9B400BC8C30 /* TopGitRepositoryService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0FCD47452909D97C00BC8C30 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				0FCD47462909D99C00BC8C30 /* HttpClient.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		0FCD47482909D9B400BC8C30 /* TopGitRepositoryService */ = {
+			isa = PBXGroup;
+			children = (
+				0FCD47412909D93300BC8C30 /* TopGitRepositoryService.swift */,
+				0FCD47432909D96400BC8C30 /* GitRepositoryItemMapper.swift */,
+			);
+			path = TopGitRepositoryService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,8 +284,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCD47422909D93300BC8C30 /* TopGitRepositoryService.swift in Sources */,
 				0FCD473F2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift in Sources */,
+				0FCD47442909D96400BC8C30 /* GitRepositoryItemMapper.swift in Sources */,
 				0F5BDF74290454C9007CF067 /* AppDelegate.swift in Sources */,
+				0FCD47472909D99C00BC8C30 /* HttpClient.swift in Sources */,
 				0FCD47262908545400BC8C30 /* GitRepositoryItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
