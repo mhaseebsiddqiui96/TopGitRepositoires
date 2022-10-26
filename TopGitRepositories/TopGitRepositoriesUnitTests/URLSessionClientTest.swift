@@ -22,7 +22,9 @@ class URLSessionClient: HTTPClient {
         let task = session.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                completion(.success((data: data, response: response)))
+            }else {
                 completion(.failure(UnExpectedError()))
             }
         }
@@ -34,15 +36,11 @@ class URLSessionClient: HTTPClient {
 
 class URLSessionClientTest: XCTestCase {
     
-    struct StubModel {
-        let error: Error?
-        let data: Data?
-        let response: URLResponse?
-    }
-
-    func test_perform_deliversFailureOnRequestError() throws {
-        
+    override func setUpWithError() throws {
         URLProtocol.registerClass(URLProtocolStub.self)
+    }
+    
+    func test_perform_deliversFailureOnRequestError() throws {
         
         let urlRequest = URLRequest(url: URL(string: "https://sadapay.com")!)
         let sut = URLSessionClient()
@@ -76,12 +74,12 @@ class URLSessionClientTest: XCTestCase {
         let sut = URLSessionClient()
         
         [
-            StubModel(error: nil, data: Data(), response: nil),
-            StubModel(error: nil, data: nil, response: URLResponse())
+            URLProtocolStub.StubModel(error: nil, data: nil, response: nil),
+            URLProtocolStub.StubModel(error: nil, data: Data(), response: nil),
+            URLProtocolStub.StubModel(error: nil, data: nil, response: URLResponse())
             
         ].forEach { model in
             
-            URLProtocol.registerClass(URLProtocolStub.self)
             let expectedError = URLSessionClient.UnExpectedError()
             var receivedError: NSError?
             
@@ -99,12 +97,43 @@ class URLSessionClientTest: XCTestCase {
             }
             
             wait(for: [expectation], timeout: 1.0)
-            
-            URLProtocol.unregisterClass(URLProtocolStub.self)
             XCTAssertEqual(receivedError, expectedError as NSError)
         }
         
+    }
     
+    func test_perform_deliversSuccessOnValidState() throws {
+        
+        let urlRequest = URLRequest(url: URL(string: "https://sadapay.com")!)
+        
+        let sut = URLSessionClient()
+        
+        var receivedResult: (data: Data, response: HTTPURLResponse)?
+        
+        let expectation = expectation(description: "Fails with error")
+        
+        URLProtocolStub.stub(error: nil, data: Data(), response: HTTPURLResponse(), for: urlRequest.url!)
+        sut.perform(urlRequest: urlRequest) { result in
+            switch result {
+            case .success(let result):
+                receivedResult = result
+            case .failure:
+                XCTFail("Expected to have an error but found success instead!")
+                
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+        
+        URLProtocol.unregisterClass(URLProtocolStub.self)
+        XCTAssertNotNil(receivedResult)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        URLProtocol.unregisterClass(URLProtocolStub.self)
     }
 
     
@@ -112,6 +141,12 @@ class URLSessionClientTest: XCTestCase {
     
     class URLProtocolStub: URLProtocol {
         
+        struct StubModel {
+            let error: Error?
+            let data: Data?
+            let response: URLResponse?
+        }
+
         static private  var stubsForURLs: [URL: Stub] = [:]
         
         private struct Stub {
