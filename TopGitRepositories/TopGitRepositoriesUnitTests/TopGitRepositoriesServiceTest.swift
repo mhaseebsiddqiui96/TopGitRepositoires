@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import TopGitRepositories
 
 protocol HTTPClient {
     
@@ -27,17 +28,68 @@ class TopGitRepositoriesService {
         self.client = client
     }
     
-    func fetch(urlRequest: URLRequest, completion: @escaping(Error) -> Void) {
+    func fetch(urlRequest: URLRequest, completion: @escaping(Result<[GitRepositoryItem], Error>) -> Void) {
         client.perform(urlRequest: urlRequest, completion: { result in
             switch result {
             case .success(let response):
-                completion(.invalidData)
+                completion(GitRepositoryItemMapper.map(response))
             case .failure:
-                completion(.internetConnectivity)
+                completion(.failure(Error.internetConnectivity))
             }
         })
     }
 }
+
+struct GitRepositoryItemMapper {
+    
+    struct Root: Decodable {
+        let items: [GitRepositoryDataModel]?
+        
+        struct GitRepositoryDataModel: Decodable {
+            let id: Int
+            let name: String?
+            let full_name: String?
+            let owner: OwnerDataModel?
+            let description: String?
+            let language: String?
+            let stargazers_count: Int?
+            
+            var repositoyItem: GitRepositoryItem {
+                return GitRepositoryItem(id: id, language: language ?? "", name: full_name ?? "", starsCount: stargazers_count ?? 0, description: description ?? "", owner: owner?.ownerItem)
+            }
+
+            struct OwnerDataModel : Codable {
+                let login : String?
+                let avatar_url : String?
+                
+                var ownerItem: GitRepositoryOwner {
+                    return GitRepositoryOwner(login: login ?? "", avatarURL: URL(string: avatar_url ?? ""))
+                }
+            }
+        }
+    }
+    
+    static func map(_ result: (data: Data, response: HTTPURLResponse)) -> Result<[GitRepositoryItem], TopGitRepositoriesService.Error>  {
+        if result.response.statusCode == 200, let apiData = decodeResponse(from: result.data) {
+            return .success(apiData.items?.map({$0.repositoyItem}) ?? [])
+        } else {
+            return .failure(TopGitRepositoriesService.Error.invalidData)
+        }
+    }
+    
+    private static func decodeResponse(from data: Data) -> Root? {
+        let decord = JSONDecoder()
+        do {
+            let response = try decord.decode(Root.self, from: data)
+            return response
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+}
+
 
 class TopGitRepositoriesServiceTest: XCTestCase {
     
@@ -62,10 +114,15 @@ class TopGitRepositoriesServiceTest: XCTestCase {
 
         let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
         let expectedResult = TopGitRepositoriesService.Error.internetConnectivity
-        var receivedResult: TopGitRepositoriesService.Error?
+        var receivedResult: TopGitRepositoriesService.Error!
 
-        sut.fetch(urlRequest: urlReq, completion: { err in
-            receivedResult = err
+        sut.fetch(urlRequest: urlReq, completion: { result in
+            switch result {
+            case .failure(let err):
+                receivedResult = err
+            case .success:
+                XCTFail("Expected Failure but fount success instead!")
+            }
         })
         
         client.completesWithError(for: urlReq, error: expectedResult)
@@ -84,8 +141,13 @@ class TopGitRepositoriesServiceTest: XCTestCase {
             let expectedResult = TopGitRepositoriesService.Error.invalidData
             var receivedResult: TopGitRepositoriesService.Error?
 
-            sut.fetch(urlRequest: urlReq, completion: { err in
-                receivedResult = err
+            sut.fetch(urlRequest: urlReq, completion: { result in
+                switch result {
+                case .failure(let err):
+                    receivedResult = err
+                case .success:
+                    XCTFail("Expected Failure but fount success instead!")
+                }
             })
             
             client.completesWithSuccess(for: urlReq, code: code, data: Data())
@@ -104,14 +166,50 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         let expectedResult = TopGitRepositoriesService.Error.invalidData
         var receivedResult: TopGitRepositoriesService.Error?
 
-        sut.fetch(urlRequest: urlReq, completion: { err in
-            receivedResult = err
+        sut.fetch(urlRequest: urlReq, completion: { result in
+            switch result {
+            case .failure(let err):
+                receivedResult = err
+            case .success:
+                XCTFail("Expected Failure but fount success instead!")
+            }
         })
         
         client.completesWithSuccess(for: urlReq, code: 200, data: Data("invalid".utf8))
         //assert
         XCTAssert(receivedResult == expectedResult)
     }
+    
+    func test_fetch_deliversListOfRepositoriesOn200WithValidJSON() throws {
+        
+        let (sut, client) = makeSUT()
+
+        let urlReq = URLRequest(url: URL(string: "https://sada-pay.com")!)
+        
+        let expectedResult = [
+            GitRepositoryItem(id: 1, language: "lan", name: "name", starsCount: 5, description: "desc", owner: nil),
+            GitRepositoryItem(id: 2, language: "lan", name: "name", starsCount: 5, description: "desc", owner: GitRepositoryOwner(login: "login", avatarURL: URL(string: "https://some-url.com"))),
+
+        ]
+        
+        var receivedResult = [GitRepositoryItem]()
+
+        sut.fetch(urlRequest: urlReq, completion: { result in
+            switch result {
+            case .failure:
+                XCTFail("Expected Success but found failure instead!")
+            case .success(let repos):
+                receivedResult = repos
+            }
+        })
+        
+        let json = ["items": makeJSON(expectedResult)]
+        let validResultListJSON = try! JSONSerialization.data(withJSONObject: json)
+        client.completesWithSuccess(for: urlReq, code: 200, data: validResultListJSON)
+        //assert
+        XCTAssert(receivedResult == expectedResult, "received result: \(receivedResult)")
+    }
+
     
     //MARK: - Helpers
     
@@ -140,6 +238,35 @@ class TopGitRepositoriesServiceTest: XCTestCase {
         let client = HttpClientSpy()
         let sut = TopGitRepositoriesService(client: client)
         return (sut, client)
+    }
+    
+    func makeJSON(_ models: [GitRepositoryItem]) -> [[String: Any]] {
+        var resultant = [[String: Any]]()
+        
+        for model in models {
+
+            var ownerJSON: [String: Any]?
+            if let owner = model.owner {
+                ownerJSON = [
+                    "login": owner.login,
+                    "avatar_url": owner.avatarURL?.absoluteString,
+                ]
+            }
+            
+            
+            let json: [String: Any] = [
+                "id": model.id,
+                "full_name": model.name,
+                "description": model.description,
+                "language": model.language,
+                "stargazers_count": model.starsCount,
+                "owner": ownerJSON
+            ]
+            
+            resultant.append(json)
+        }
+        
+        return resultant
     }
     
 }
