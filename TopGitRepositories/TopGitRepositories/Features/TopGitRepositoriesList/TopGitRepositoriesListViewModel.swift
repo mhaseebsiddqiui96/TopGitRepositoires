@@ -15,7 +15,7 @@ protocol TopGitRepositoriesListViewModelProtocol {
     var errMsg: Reactive<String> {get}
     var reloadListOfRepositories: Reactive<Void> {get}
     var notConnectedToInternet: Reactive<Bool> { get }
-    func getRepository(at index: Int) -> GitRepositoryItem?
+    func getRepository(at index: Int) -> GitRepositoryViewModel?
     
     // inputs
     func viewLoaded()
@@ -35,7 +35,7 @@ class TopGitRepositoriesListViewModel: TopGitRepositoriesListViewModelProtocol {
         return respositories.count
     }
     
-    private var respositories: [GitRepositoryItem] = [] {
+    private var respositories: [GitRepositoryViewModel] = [] {
         didSet {
             reloadListOfRepositories.value = ()
         }
@@ -60,27 +60,29 @@ class TopGitRepositoriesListViewModel: TopGitRepositoriesListViewModelProtocol {
             self.handleGetRepositoryResult(result)
         }
     }
-    
-    
+        
     fileprivate func handleGetRepositoryResult(_ result: Result<[GitRepositoryItem], GitRepositoryServiceError>) {
         
         switch result {
         case .success(let repos):
-            respositories = repos
+            respositories = repos.map({GitRepositoryViewModel(model: $0)})
         case .failure(let err):
             switch err {
             case .invalidData: errMsg.value = err.localizedDescription
-            case .clientError(let err):
-                if err.isNoInternetError {
-                    notConnectedToInternet.value = true
-                } else {
-                    errMsg.value = err.localizedDescription
-                }
+            case .clientError(let err): handleError(err)
             }
         }
     }
     
-    func getRepository(at index: Int) -> GitRepositoryItem? {
+    fileprivate func handleError(_ err: Error) {
+        if err.isNoInternetError {
+            notConnectedToInternet.value = true
+        } else {
+            errMsg.value = err.localizedDescription
+        }
+    }
+    
+    func getRepository(at index: Int) -> GitRepositoryViewModel? {
         if index < respositories.count {
             return respositories[index]
         }

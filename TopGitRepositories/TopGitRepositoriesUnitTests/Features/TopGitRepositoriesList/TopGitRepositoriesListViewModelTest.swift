@@ -92,7 +92,7 @@ class TopGitRepositoriesListViewModelTest: XCTestCase {
         
         XCTAssertFalse(isLoading)
         XCTAssertEqual(sut.numberOfRepositories, 1)
-        XCTAssertEqual(sut.getRepository(at: 0), models[0])
+        XCTAssertEqual(sut.getRepository(at: 0)?.id, models[0].id)
         XCTAssertTrue(reloadListCalled)
     }
     
