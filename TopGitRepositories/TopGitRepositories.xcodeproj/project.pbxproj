@@ -10,6 +10,9 @@
 		0F5BDF74290454C9007CF067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BDF73290454C9007CF067 /* AppDelegate.swift */; };
 		0F5BDF7D290454CB007CF067 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5BDF7C290454CB007CF067 /* Assets.xcassets */; };
 		0F5BDF80290454CB007CF067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5BDF7E290454CB007CF067 /* LaunchScreen.storyboard */; };
+		0F774982290B295600C3141F /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F774981290B295600C3141F /* Reactive.swift */; };
+		0F774984290B297B00C3141F /* TopGitRepositoriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F774983290B297B00C3141F /* TopGitRepositoriesListViewModel.swift */; };
+		0F774986290B29B000C3141F /* ErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F774985290B29B000C3141F /* ErrorExt.swift */; };
 		0F9A96832909F8F0000F08FB /* URLSessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A96822909F8F0000F08FB /* URLSessionClient.swift */; };
 		0F9A9685290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9684290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift */; };
 		0F9A9688290AF8EF000F08FB /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9687290AF8EF000F08FB /* Routable.swift */; };
@@ -40,6 +43,9 @@
 		0F5BDF7C290454CB007CF067 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F5BDF7F290454CB007CF067 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F5BDF81290454CB007CF067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F774981290B295600C3141F /* Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactive.swift; sourceTree = "<group>"; };
+		0F774983290B297B00C3141F /* TopGitRepositoriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoriesListViewModel.swift; sourceTree = "<group>"; };
+		0F774985290B29B000C3141F /* ErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExt.swift; sourceTree = "<group>"; };
 		0F9A96822909F8F0000F08FB /* URLSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClient.swift; sourceTree = "<group>"; };
 		0F9A9684290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryEndpoint.swift; sourceTree = "<group>"; };
 		0F9A9687290AF8EF000F08FB /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -102,6 +108,8 @@
 				0F5BDF7C290454CB007CF067 /* Assets.xcassets */,
 				0F5BDF7E290454CB007CF067 /* LaunchScreen.storyboard */,
 				0F5BDF81290454CB007CF067 /* Info.plist */,
+				0F774981290B295600C3141F /* Reactive.swift */,
+				0F774985290B29B000C3141F /* ErrorExt.swift */,
 			);
 			path = TopGitRepositories;
 			sourceTree = "<group>";
@@ -169,6 +177,7 @@
 		0F9A968C290B0A17000F08FB /* TopGitRepositoriesList */ = {
 			isa = PBXGroup;
 			children = (
+				0F774983290B297B00C3141F /* TopGitRepositoriesListViewModel.swift */,
 			);
 			path = TopGitRepositoriesList;
 			sourceTree = "<group>";
@@ -342,10 +351,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F774986290B29B000C3141F /* ErrorExt.swift in Sources */,
+				0F774984290B297B00C3141F /* TopGitRepositoriesListViewModel.swift in Sources */,
 				0FCD47422909D93300BC8C30 /* TopGitRepositoryService.swift in Sources */,
 				0F9A9685290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift in Sources */,
 				0FCD473F2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift in Sources */,
 				0FCD47442909D96400BC8C30 /* GitRepositoryItemMapper.swift in Sources */,
+				0F774982290B295600C3141F /* Reactive.swift in Sources */,
 				0F5BDF74290454C9007CF067 /* AppDelegate.swift in Sources */,
 				0F9A96832909F8F0000F08FB /* URLSessionClient.swift in Sources */,
 				0FCD47472909D99C00BC8C30 /* HttpClient.swift in Sources */,

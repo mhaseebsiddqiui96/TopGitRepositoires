@@ -8,105 +8,6 @@
 import XCTest
 @testable import TopGitRepositories
 
-class Reactive<T> {
-    typealias Listner = (T?) -> Void
-    var listner: [Listner?] = [Listner?]()
-    
-    var value: T? {
-        didSet {
-            for l in listner {
-                l?(value)
-            }
-        }
-    }
-    
-    init(_ value: T?) {
-        self.value = value
-    }
-    
-    func bind(listner: Listner?) {
-        self.listner.append(listner)
-        listner?(value)
-    }
-}
-
-
-class TopGitRepositoriesListViewModel {
-    
-    let service: TopGitRepositoryServiceProtocol
-    
-    var isLoading = Reactive(false)
-    var errMsg = Reactive<String>(nil)
-    var reloadListOfRepositories = Reactive<Void>(())
-    var notConnectedToInternet = Reactive(false)
-    
-    var numberOfRepositories: Int {
-        return respositories.count
-    }
-    
-    private var respositories: [GitRepositoryItem] = [] {
-        didSet {
-            reloadListOfRepositories.value = ()
-        }
-    }
-    
-    init(service: TopGitRepositoryServiceProtocol) {
-        self.service = service
-    }
-    
-    func viewLoaded() {
-        fetchTopRepositories()
-    }
-
-    private func fetchTopRepositories() {
-        
-        isLoading.value = true
-        let request = TopGitRepositoryEndpoint.getTopGitRepos.asURLRequest()
-        
-        service.fetch(urlRequest: request) {[weak self] result in
-            guard let self = self else {return}
-            self.isLoading.value = false
-            self.handleGetRepositoryResult(result)
-        }
-    }
-    
-    
-    fileprivate func handleGetRepositoryResult(_ result: Result<[GitRepositoryItem], GitRepositoryServiceError>) {
-        switch result {
-        case .success(let repos):
-            respositories = repos
-        case .failure(let err):
-            switch err {
-            case .invalidData: errMsg.value = err.localizedDescription
-            case .clientError(let err):
-                if err.isNoInternetError {
-                    notConnectedToInternet.value = true
-                } else {
-                    errMsg.value = err.localizedDescription
-                }
-            }
-        }
-    }
-    
-    
-    func getRepository(at index: Int) -> GitRepositoryItem? {
-        if index < respositories.count {
-            return respositories[index]
-        }
-        return nil
-    }
-    
-}
-
-extension Error {
-    var isNoInternetError: Bool {
-        let code = URLError.Code(rawValue: (self as NSError).code)
-        switch code {
-        case .notConnectedToInternet: return true
-        default: return false
-        }
-    }
-}
 
 class TopGitRepositoriesListViewModelTest: XCTestCase {
 
@@ -195,8 +96,16 @@ class TopGitRepositoriesListViewModelTest: XCTestCase {
         XCTAssertTrue(reloadListCalled)
     }
     
-    
-    
+    func test_refreshList_callsFetchRepositories() throws {
+        
+        let service = TopGitRepositoryServiceSpy()
+        let sut = TopGitRepositoriesListViewModelSpy(service: service)
+        
+        sut.refreshList()
+        
+        XCTAssertTrue(sut.fetchRequestCalled)
+      
+    }
     
     //MARK: - Helpers
     
@@ -216,6 +125,14 @@ class TopGitRepositoriesListViewModelTest: XCTestCase {
             fetchRequests[urlRequest]?(.success(models))
         }
     
+    }
+    
+    class TopGitRepositoriesListViewModelSpy: TopGitRepositoriesListViewModel {
+        var fetchRequestCalled = false
+        
+        override func fetchTopRepositories() {
+            fetchRequestCalled = true
+        }
     }
 
 }
