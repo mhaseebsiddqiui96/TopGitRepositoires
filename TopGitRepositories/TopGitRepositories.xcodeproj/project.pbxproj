@@ -14,6 +14,7 @@
 		0F9A9685290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9684290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift */; };
 		0F9A9688290AF8EF000F08FB /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9687290AF8EF000F08FB /* Routable.swift */; };
 		0F9A968A290AFA4B000F08FB /* TopGitRepositoryEndpointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9689290AFA4B000F08FB /* TopGitRepositoryEndpointTest.swift */; };
+		0F9A9690290B0AAA000F08FB /* TopGitRepositoriesListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A968F290B0AAA000F08FB /* TopGitRepositoriesListViewModelTest.swift */; };
 		0FCD47262908545400BC8C30 /* GitRepositoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */; };
 		0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */; };
 		0FCD473F2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCD473E2909D16700BC8C30 /* TopGitRepositoryServiceProtocol.swift */; };
@@ -43,6 +44,7 @@
 		0F9A9684290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryEndpoint.swift; sourceTree = "<group>"; };
 		0F9A9687290AF8EF000F08FB /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		0F9A9689290AFA4B000F08FB /* TopGitRepositoryEndpointTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryEndpointTest.swift; sourceTree = "<group>"; };
+		0F9A968F290B0AAA000F08FB /* TopGitRepositoriesListViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoriesListViewModelTest.swift; sourceTree = "<group>"; };
 		0FCD47252908545400BC8C30 /* GitRepositoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryItem.swift; sourceTree = "<group>"; };
 		0FCD472E2908754100BC8C30 /* TopGitRepositoriesUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopGitRepositoriesUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoriesServiceTest.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		0F8336AE29083EA900E4BB3E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0F9A968C290B0A17000F08FB /* TopGitRepositoriesList */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -153,12 +156,44 @@
 			path = Endpoint;
 			sourceTree = "<group>";
 		};
-		0FCD472F2908754100BC8C30 /* TopGitRepositoriesUnitTests */ = {
+		0F9A968B290AFBD2000F08FB /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
 				0FCD473A2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift */,
 				0F9A9689290AFA4B000F08FB /* TopGitRepositoryEndpointTest.swift */,
 				0FCD47492909E1C200BC8C30 /* URLSessionClientTest.swift */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		0F9A968C290B0A17000F08FB /* TopGitRepositoriesList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TopGitRepositoriesList;
+			sourceTree = "<group>";
+		};
+		0F9A968D290B0A37000F08FB /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				0F9A968E290B0A83000F08FB /* TopGitRepositoriesList */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		0F9A968E290B0A83000F08FB /* TopGitRepositoriesList */ = {
+			isa = PBXGroup;
+			children = (
+				0F9A968F290B0AAA000F08FB /* TopGitRepositoriesListViewModelTest.swift */,
+			);
+			path = TopGitRepositoriesList;
+			sourceTree = "<group>";
+		};
+		0FCD472F2908754100BC8C30 /* TopGitRepositoriesUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				0F9A968D290B0A37000F08FB /* Features */,
+				0F9A968B290AFBD2000F08FB /* Infrastructure */,
 			);
 			path = TopGitRepositoriesUnitTests;
 			sourceTree = "<group>";
@@ -326,6 +361,7 @@
 				0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */,
 				0FCD474A2909E1C200BC8C30 /* URLSessionClientTest.swift in Sources */,
 				0F9A968A290AFA4B000F08FB /* TopGitRepositoryEndpointTest.swift in Sources */,
+				0F9A9690290B0AAA000F08FB /* TopGitRepositoriesListViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
