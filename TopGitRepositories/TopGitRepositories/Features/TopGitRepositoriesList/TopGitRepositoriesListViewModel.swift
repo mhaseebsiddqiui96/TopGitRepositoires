@@ -63,6 +63,7 @@ class TopGitRepositoriesListViewModel: TopGitRepositoriesListViewModelProtocol {
     
     
     fileprivate func handleGetRepositoryResult(_ result: Result<[GitRepositoryItem], GitRepositoryServiceError>) {
+        
         switch result {
         case .success(let repos):
             respositories = repos
