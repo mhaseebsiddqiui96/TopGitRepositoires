@@ -38,6 +38,7 @@ class TopGitRepositoriesListViewModel {
     var isLoading = Reactive(false)
     var errMsg = Reactive<String>(nil)
     var reloadListOfRepositories = Reactive<Void>(())
+    var notConnectedToInternet = Reactive(false)
     
     var numberOfRepositories: Int {
         return respositories.count
@@ -65,7 +66,6 @@ class TopGitRepositoriesListViewModel {
         service.fetch(urlRequest: request) {[weak self] result in
             guard let self = self else {return}
             self.isLoading.value = false
-            
             self.handleGetRepositoryResult(result)
         }
     }
@@ -76,7 +76,15 @@ class TopGitRepositoriesListViewModel {
         case .success(let repos):
             respositories = repos
         case .failure(let err):
-            errMsg.value = err.localizedDescription
+            switch err {
+            case .invalidData: errMsg.value = err.localizedDescription
+            case .clientError(let err):
+                if err.isNoInternetError {
+                    notConnectedToInternet.value = true
+                } else {
+                    errMsg.value = err.localizedDescription
+                }
+            }
         }
     }
     
@@ -88,6 +96,16 @@ class TopGitRepositoriesListViewModel {
         return nil
     }
     
+}
+
+extension Error {
+    var isNoInternetError: Bool {
+        let code = URLError.Code(rawValue: (self as NSError).code)
+        switch code {
+        case .notConnectedToInternet: return true
+        default: return false
+        }
+    }
 }
 
 class TopGitRepositoriesListViewModelTest: XCTestCase {
@@ -136,6 +154,25 @@ class TopGitRepositoriesListViewModelTest: XCTestCase {
         XCTAssertNotNil(errMsg)
     }
     
+    func test_viewModelState_onViewLoaded_getsNoInternetErrorFromService() throws {
+        
+        let service = TopGitRepositoryServiceSpy()
+        let sut = TopGitRepositoriesListViewModel(service: service)
+        
+        var isLoading = true
+        var noInternet = false
+        
+        sut.isLoading.bind { val in isLoading = val ?? true}
+        sut.notConnectedToInternet.bind { val in noInternet = val ?? true }
+        
+        sut.viewLoaded()
+        
+        service.completesWithError(urlRequest: TopGitRepositoryEndpoint.getTopGitRepos.asURLRequest(), error: .clientError(error: NSError(domain: "no intenet", code: URLError.Code.notConnectedToInternet.rawValue)))
+        
+        XCTAssertFalse(isLoading)
+        XCTAssertNotNil(noInternet)
+    }
+    
     func test_viewModelState_onViewLoaded_getsSuccessFromService() throws {
         
         let service = TopGitRepositoryServiceSpy()
@@ -148,7 +185,6 @@ class TopGitRepositoriesListViewModelTest: XCTestCase {
         sut.reloadListOfRepositories.bind { val in reloadListCalled = val != nil }
         
         sut.viewLoaded()
-        
         
         let models = [GitRepositoryItem(id: 1, language: "lan", name: "name", starsCount: 5, description: "desc", owner: nil)]
         service.completesWithSuccess(urlRequest: TopGitRepositoryEndpoint.getTopGitRepos.asURLRequest(), models: models)
