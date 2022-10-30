@@ -16,10 +16,10 @@ extension UIImage {
 
 extension UIImageView {
     func downLoadImage(with url: URL?) {
-        sd_setImage(with: url)
+        self.sd_setImage(with: url, placeholderImage: nil)
     }
     
     func cancelDownload() {
-        sd_cancelCurrentImageLoad()
+        self.sd_cancelCurrentImageLoad()
     }
 }

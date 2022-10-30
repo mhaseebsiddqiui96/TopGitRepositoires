@@ -18,6 +18,8 @@ class TopGitRepositoriesListView: UIView {
         return tableView
     }()
     
+    private let refreshControl = UIRefreshControl()
+    
    
     init(viewModel: TopGitRepositoriesListViewModelProtocol) {
         self.viewModel = viewModel
@@ -35,24 +37,14 @@ class TopGitRepositoriesListView: UIView {
         tableView.canShimmer = true
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshList), for: .valueChanged)
     }
-    
-    fileprivate func handleTableViewLoadingState() {
-        self.tableView.displayGradientAnimation()
-    }
-    
-    fileprivate func handleTableViewNotLoadingState() {
-        self.tableView.hideGradientAnimation()
-    }
-    
     
     private func bindings() {
         bindToReloadList()
-        
         bindToisLoading()
-        
         bindToNoInternet()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -92,12 +84,27 @@ class TopGitRepositoriesListView: UIView {
         }
     }
     
+    fileprivate func handleTableViewLoadingState() {
+        self.tableView.displayGradientAnimation()
+    }
+    
+    fileprivate func handleTableViewNotLoadingState() {
+        self.refreshControl.endRefreshing()
+        self.tableView.canShimmer = true
+        self.tableView.hideGradientAnimation()
+    }
+    
     fileprivate func bindToReloadList() {
         viewModel.reloadListOfRepositories.bind {[weak self] val in
             if val != nil { DispatchQueue.main.async { self?.tableView.reloadData() }}
         }
     }
     
+    @objc func refreshList() {
+        // doing this because when I pull down to refresh it was giving me some logs of unable to satisfy constaints simulataniously may be it was happening because of this skeleton view so stop this while pull down
+        tableView.canShimmer = false
+        viewModel.refreshList()
+    }
 }
 
 extension TopGitRepositoriesListView: Skeletonable, UITableViewDelegate {

@@ -123,7 +123,7 @@ class GitRepositoryListCell: UITableViewCell {
         let starCountStack = UIStackView(arrangedSubviews: [imageViewStarCount, labelStarCount])
         starCountStack.axis = .horizontal
         starCountStack.distribution = .fill
-        starCountStack.alignment = .fill
+        starCountStack.alignment = .center
         starCountStack.spacing = 8
         starCountStack.canShimmer = true
 
@@ -132,7 +132,7 @@ class GitRepositoryListCell: UITableViewCell {
         let lanStack = UIStackView(arrangedSubviews: [viewLanIndicator, labelLanguage])
         lanStack.axis = .horizontal
         lanStack.distribution = .fill
-        lanStack.alignment = .fill
+        lanStack.alignment = .center
         lanStack.spacing = 8
         lanStack.canShimmer = true
         
@@ -167,7 +167,7 @@ class GitRepositoryListCell: UITableViewCell {
         self.contentView.addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                                     mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                                     mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
                                      mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
                                      mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)])
         
@@ -179,6 +179,7 @@ class GitRepositoryListCell: UITableViewCell {
         self.labelRepoName.text = viewModel.repoName
         self.labelStarCount.text = "\(viewModel.starsCount)"
         self.labelRepoDescription.text = viewModel.repoDescription
+        // ideally we should fetch image in prefetch rows method
         self.imageViewAvatar.downLoadImage(with: viewModel.avtarURL)
     }
     
