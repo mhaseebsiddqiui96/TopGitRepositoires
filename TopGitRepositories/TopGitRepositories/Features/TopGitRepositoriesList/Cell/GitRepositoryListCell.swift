@@ -24,7 +24,7 @@ class GitRepositoryListCell: UITableViewCell {
     lazy var labelOwner: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .darkGray
+        label.textColor = .secondaryLabel
         label.text = "Haseeb"
         label.canShimmer = true
         return label
@@ -35,6 +35,7 @@ class GitRepositoryListCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         label.text = "Swift-Repository-101"
         label.canShimmer = true
+        label.textColor = .label
 
         return label
     }()
@@ -43,7 +44,7 @@ class GitRepositoryListCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .darkGray
+        label.textColor = .secondaryLabel
         label.text = "Some descriptoiom Some descriptoiom, Some descriptoiom, Some descriptoiom"
         label.canShimmer = true
 
@@ -53,7 +54,7 @@ class GitRepositoryListCell: UITableViewCell {
     lazy var labelStarCount: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = .darkGray
+        label.textColor = .secondaryLabel
         label.text = "12"
         label.canShimmer = true
 
@@ -63,7 +64,7 @@ class GitRepositoryListCell: UITableViewCell {
     lazy var labelLanguage: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = .darkGray
+        label.textColor = .secondaryLabel
         label.text = "Swift"
         label.canShimmer = true
 
@@ -73,6 +74,9 @@ class GitRepositoryListCell: UITableViewCell {
     lazy var imageViewStarCount: UIImageView = {
         let starImage = UIImageView()
         starImage.image = UIImage.star
+        starImage.image = starImage.image?.withRenderingMode(.alwaysTemplate)
+        starImage.tintColor = .label
+        
         starImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([starImage.heightAnchor.constraint(equalToConstant: 12), starImage.widthAnchor.constraint(equalToConstant: 12)])
         starImage.canShimmer = true

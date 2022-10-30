@@ -11,7 +11,7 @@ extension Error {
     var isNoInternetError: Bool {
         let code = URLError.Code(rawValue: (self as NSError).code)
         switch code {
-        case .notConnectedToInternet: return true
+        case .notConnectedToInternet, .timedOut: return true
         default: return false
         }
     }

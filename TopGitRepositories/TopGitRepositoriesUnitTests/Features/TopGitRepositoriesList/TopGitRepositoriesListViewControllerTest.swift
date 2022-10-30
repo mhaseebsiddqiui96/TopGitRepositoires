@@ -97,6 +97,14 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
         
     }
     
+    func test_refreshList_callsViewModelToLoadList() throws {
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
+        let view = TopGitRepositoriesListViewSpy(viewModel: viewModelSpy)
+        
+        view.refreshList()
+        
+        XCTAssertTrue(viewModelSpy.refreshListCalled == 1)
+    }
 
     //MARK: - Helpers
     class TopGitRepositoriesListViewModelMock: TopGitRepositoriesListViewModelProtocol {

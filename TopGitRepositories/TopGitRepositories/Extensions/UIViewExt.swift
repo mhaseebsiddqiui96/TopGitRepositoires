@@ -58,6 +58,7 @@ extension UIView {
     @objc func showNoInternetView(retryTapped: @escaping () -> Void) {
         let animationView: NoInternetView = NoInternetView(frame: self.bounds)
         animationView.retryTapped = retryTapped
+        animationView.backgroundColor = .systemBackground
         animationView.tag = UIView.noInternetViewTag
         
         animationView.frame = self.bounds
@@ -67,6 +68,7 @@ extension UIView {
         
         
         self.addSubview(animationView)
+        animationView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([animationView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
                                      animationView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
@@ -84,4 +86,5 @@ extension UIView {
     }
     
 }
+
 

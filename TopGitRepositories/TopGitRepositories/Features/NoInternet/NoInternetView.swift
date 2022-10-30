@@ -31,29 +31,27 @@ class NoInternetView: UIView {
     
     var retryButton: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setTitle("Retry", for: .normal)
+        btn.setTitle(LocalizedStrings.retryTitle.localized, for: .normal)
         btn.layer.cornerRadius = 12
         btn.backgroundColor = .systemBlue
-        btn.layer.borderWidth = 2
-        btn.setTitleColor(.white, for: .normal)
-        
+        btn.setTitleColor(.white, for: .normal)        
         return btn
     }()
     
     lazy var labelTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
-        label.textColor = .darkGray
+        label.textColor = .label
         label.textAlignment = .center
-        label.text = "Something went wrong!"
+        label.text = LocalizedStrings.noInternetTitle.localized
         return label
     }()
     
     lazy var labelDescription: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        label.text = "An alien probably blocking your signal."
-        label.textColor = .lightGray
+        label.text = LocalizedStrings.noInternetDescription.localized
+        label.textColor = .secondaryLabel
         label.textAlignment = .center
 
         return label
@@ -98,7 +96,7 @@ class NoInternetView: UIView {
                                      
                                      animationView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 24)])
         
-        self.backgroundColor = UIColor.white //UIColor(named: ColorConstants.whiteColor)
+        self.backgroundColor = UIColor.systemBackground //UIColor(named: ColorConstants.whiteColor)
 
     }
     

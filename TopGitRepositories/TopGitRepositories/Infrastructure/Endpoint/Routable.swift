@@ -67,6 +67,7 @@ extension Routable {
             
         }
         
+        urlRequest.timeoutInterval = 5
         return urlRequest
         
     }

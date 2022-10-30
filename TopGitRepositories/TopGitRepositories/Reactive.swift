@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Reactive<T> {
     typealias Listner = (T?) -> Void
@@ -28,3 +29,4 @@ class Reactive<T> {
         listner?(value)
     }
 }
+

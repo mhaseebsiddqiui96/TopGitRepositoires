@@ -12,10 +12,12 @@ class TopGitRepositoriesListView: UIView {
     let viewModel: TopGitRepositoriesListViewModelProtocol
 
     lazy var tableView: UITableView = {
+        
         let tableView = UITableView()
         tableView.register(GitRepositoryListCell.self, forCellReuseIdentifier: "\(GitRepositoryListCell.self)")
         tableView.separatorStyle = .singleLine
         return tableView
+        
     }()
     
     private let refreshControl = UIRefreshControl()
@@ -30,7 +32,7 @@ class TopGitRepositoriesListView: UIView {
     }
     
     fileprivate func initialSetup() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         addRepoTableView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -38,6 +40,7 @@ class TopGitRepositoriesListView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         tableView.refreshControl = refreshControl
+        tableView.backgroundColor = .systemBackground
         refreshControl.addTarget(self, action: #selector(refreshList), for: .valueChanged)
     }
     
@@ -117,7 +120,11 @@ extension TopGitRepositoriesListView: Skeletonable, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(GitRepositoryListCell.self)", for: indexPath) as? GitRepositoryListCell else { return UITableViewCell() }
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "\(GitRepositoryListCell.self)",
+            for: indexPath) as? GitRepositoryListCell else { return UITableViewCell() }
+        
         if let viewModel = viewModel.getRepository(at: indexPath.row) {
             cell.populate(with: viewModel)
         }

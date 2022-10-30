@@ -31,7 +31,7 @@ class TopGitRepositoriesListViewModel: TopGitRepositoriesListViewModelProtocol {
     var errMsg = Reactive<String>(nil)
     var reloadListOfRepositories = Reactive<Void>(())
     var notConnectedToInternet = Reactive(false)
-    var title: String { return "Trending" }
+    var title: String { return LocalizedStrings.listTitle.localized }
     
     var numberOfRepositories: Int {
         return respositories.count

@@ -27,6 +27,7 @@ class TopGitRepositoriesListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = viewModel.title
         viewModel.viewLoaded()
         bindToViewModel()
     }
