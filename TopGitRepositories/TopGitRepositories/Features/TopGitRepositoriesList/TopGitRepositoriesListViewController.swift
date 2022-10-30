@@ -38,10 +38,6 @@ class TopGitRepositoriesListViewController: UIViewController {
     
     func bindToViewModel() {
      
-        viewModel.notConnectedToInternet.bind { _ in
-            
-        }
-        
         viewModel.errMsg.bind { _ in
             
         }

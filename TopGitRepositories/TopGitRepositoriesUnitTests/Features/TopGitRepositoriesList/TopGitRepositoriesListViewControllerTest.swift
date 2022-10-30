@@ -77,6 +77,26 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
         XCTAssertEqual(cell?.labelOwner.text, "Haseeb")
     }
     
+    func test_noInternet_displaysNoInternetView() throws {
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
+        let view = TopGitRepositoriesListViewSpy(viewModel: viewModelSpy)
+
+
+        viewModelSpy.notConnectedToInternet.value = true
+        
+        let expectation = expectation(description: "Test")
+        DispatchQueue.main.async {
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 1, handler: nil)
+        
+        XCTAssertTrue(view.noInternetClosuers.count == 1)
+        view.noInternetClosuers[0]()
+        XCTAssertTrue(view.hideNoInternetViewCalled)
+        XCTAssertTrue(viewModelSpy.viewLoadedCalled == 1)
+        
+    }
+    
 
     //MARK: - Helpers
     class TopGitRepositoriesListViewModelMock: TopGitRepositoriesListViewModelProtocol {
@@ -115,6 +135,18 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
         }
         
         
+    }
+    
+    class TopGitRepositoriesListViewSpy: TopGitRepositoriesListView {
+        var noInternetClosuers = [() -> Void]()
+        var hideNoInternetViewCalled = false
+        override func showNoInternetView(retryTapped: @escaping () -> Void) {
+            noInternetClosuers.append(retryTapped)
+        }
+        
+        override func hideNoInternetView() {
+            hideNoInternetViewCalled = true
+        }
     }
 
 }

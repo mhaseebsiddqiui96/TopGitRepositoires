@@ -42,23 +42,16 @@ class TopGitRepositoriesListView: UIView {
     }
     
     fileprivate func handleTableViewNotLoadingState() {
-        self.tableView.hideGradientAnimation()        
+        self.tableView.hideGradientAnimation()
     }
     
+    
     private func bindings() {
-        viewModel.reloadListOfRepositories.bind {[weak self] val in
-            if val != nil { DispatchQueue.main.async { self?.tableView.reloadData() }}
-        }
+        bindToReloadList()
         
-        viewModel.isLoading.bind {[weak self] isLoading in
-            DispatchQueue.main.async {
-                if let isloading = isLoading, isloading {
-                    self?.handleTableViewLoadingState()
-                } else {
-                    self?.handleTableViewNotLoadingState()
-                }
-            }
-        }
+        bindToisLoading()
+        
+        bindToNoInternet()
         
     }
     
@@ -68,6 +61,41 @@ class TopGitRepositoriesListView: UIView {
     
     private func addRepoTableView() {
         addSubviewAndPinEdges(tableView)
+    }
+    
+    
+    fileprivate func bindToNoInternet() {
+        viewModel.notConnectedToInternet.bind {[weak self] notConnected in
+            if let notConnected = notConnected, notConnected {
+                DispatchQueue.main.async {
+                    self?.showNoInternetView {[weak self] in
+                        self?.viewModel.viewLoaded()
+                        self?.hideNoInternetView()
+                    }
+                }
+            }
+        }
+    }
+    
+    fileprivate func bindToisLoading() {
+        viewModel.isLoading.bind {[weak self] isLoading in
+            if let isloading = isLoading, isloading {
+                DispatchQueue.main.async {
+                    self?.handleTableViewLoadingState()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.handleTableViewNotLoadingState()
+                }
+            }
+            
+        }
+    }
+    
+    fileprivate func bindToReloadList() {
+        viewModel.reloadListOfRepositories.bind {[weak self] val in
+            if val != nil { DispatchQueue.main.async { self?.tableView.reloadData() }}
+        }
     }
     
 }
