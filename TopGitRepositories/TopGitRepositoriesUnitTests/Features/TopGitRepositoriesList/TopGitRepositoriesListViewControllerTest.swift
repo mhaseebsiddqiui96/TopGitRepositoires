@@ -12,14 +12,14 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
 
 
     func test_viewDidLoad_notifiesViewModel() throws {
-        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
         let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
         let _ = sut.view
         XCTAssertEqual(viewModelSpy.viewLoadedCalled, 1)
     }
     
     func test_viewDidLoad_bindsToViewModel() throws {
-        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
         let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
 
         let _ = sut.view
@@ -32,7 +32,7 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
     }
     
     func test_viewType_shouldBeTopGitRespositoryListView() throws {
-        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
         let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
 
         let _ = sut.view
@@ -41,7 +41,7 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
     }
     
     func test_reloadListOfRepositories_displaysListOfRepos() throws {
-        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
         let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
 
         let _ = sut.view
@@ -49,18 +49,36 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
         viewModelSpy.reloadListOfRepositories.value = ()
 
         XCTAssertEqual(sut.rootView.tableView.dataSource?.numberOfSections?(in: sut.rootView.tableView), 1)
-        XCTAssertEqual(sut.rootView.tableView.dataSource?.tableView(sut.rootView.tableView, numberOfRowsInSection: 0), 10)
+        XCTAssertEqual(sut.rootView.tableView.dataSource?.tableView(sut.rootView.tableView, numberOfRowsInSection: 0), viewModelSpy.numberOfReposToReturn)
 
     }
+    
+    func test_reloadListOfRepositories_displaysCellWithCorrectInfo() throws {
+        let viewModelSpy = TopGitRepositoriesListViewModelMock()
+        let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
+
+        let _ = sut.view
+
+        viewModelSpy.reloadListOfRepositories.value = ()
+
+        let cell = sut.rootView.tableView.dataSource?.tableView(sut.rootView.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? GitRepositoryListCell
+        
+        XCTAssertEqual(cell?.labelLanguage.text, "swift")
+        XCTAssertEqual(cell?.labelStarCount.text, "5")
+        XCTAssertEqual(cell?.labelRepoName.text, "swift-101")
+        XCTAssertEqual(cell?.labelOwner.text, "Haseeb")
+    }
+    
 
     //MARK: - Helpers
-    class TopGitRepositoriesListViewModelSpy: TopGitRepositoriesListViewModelProtocol {
+    class TopGitRepositoriesListViewModelMock: TopGitRepositoriesListViewModelProtocol {
        
         var viewLoadedCalled = 0
         var refreshListCalled = 0
+        var numberOfReposToReturn = 10
         
         var numberOfRepositories: Int {
-            return 10
+            return numberOfReposToReturn
         }
         
         var isLoading: Reactive<Bool> = .init(false)
@@ -76,7 +94,8 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
         }
         
         func getRepository(at index: Int) -> GitRepositoryViewModel? {
-            return nil
+            return GitRepositoryViewModel(id: 1, userName: "Haseeb", avtarURL: nil, repoName: "swift-101", repoDescription: "test swift package", starsCount: 5, language: "swift")
+            
         }
         
         func viewLoaded() {

@@ -38,10 +38,6 @@ class TopGitRepositoriesListViewController: UIViewController {
             
         }
         
-        viewModel.reloadListOfRepositories.bind { _ in
-            
-        }
-        
         viewModel.errMsg.bind { _ in
             
         }

@@ -24,6 +24,7 @@ class TopGitRepositoriesListView: UIView {
         super.init(frame: .zero)
 
         initialSetup()
+        bindings()
     }
     
     fileprivate func initialSetup() {
@@ -31,6 +32,12 @@ class TopGitRepositoriesListView: UIView {
         addRepoTableView()
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    private func bindings() {
+        viewModel.reloadListOfRepositories.bind {[weak self] val in
+            if val != nil { self?.tableView.reloadData() }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -54,6 +61,9 @@ extension TopGitRepositoriesListView: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(GitRepositoryListCell.self)", for: indexPath) as? GitRepositoryListCell else { return UITableViewCell() }
+        if let viewModel = viewModel.getRepository(at: indexPath.row) {
+            cell.populate(with: viewModel)
+        }
         return cell
     }
 }

@@ -144,4 +144,12 @@ class GitRepositoryListCell: UITableViewCell {
         
     }
     
+    func populate(with viewModel: GitRepositoryViewModel) {
+        self.labelOwner.text = viewModel.userName
+        self.labelLanguage.text = viewModel.language
+        self.labelRepoName.text = viewModel.repoName
+        self.labelStarCount.text = "\(viewModel.starsCount)"
+        self.labelRepoDescription.text = viewModel.repoDescription
+    }
+    
 }
