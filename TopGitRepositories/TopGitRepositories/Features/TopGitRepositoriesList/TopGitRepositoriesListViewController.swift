@@ -9,7 +9,10 @@ import UIKit
 
 class TopGitRepositoriesListViewController: UIViewController {
     
-    init() {
+    let viewModel: TopGitRepositoriesListViewModelProtocol
+    
+    init(viewModel: TopGitRepositoriesListViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -23,6 +26,7 @@ class TopGitRepositoriesListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.viewLoaded()
     }
     
 }

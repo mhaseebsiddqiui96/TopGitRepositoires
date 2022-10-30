@@ -15,6 +15,7 @@ protocol TopGitRepositoriesListViewModelProtocol {
     var errMsg: Reactive<String> {get}
     var reloadListOfRepositories: Reactive<Void> {get}
     var notConnectedToInternet: Reactive<Bool> { get }
+    var title: String {get}
     func getRepository(at index: Int) -> GitRepositoryViewModel?
     
     // inputs
@@ -30,6 +31,7 @@ class TopGitRepositoriesListViewModel: TopGitRepositoriesListViewModelProtocol {
     var errMsg = Reactive<String>(nil)
     var reloadListOfRepositories = Reactive<Void>(())
     var notConnectedToInternet = Reactive(false)
+    var title: String { return "Trending" }
     
     var numberOfRepositories: Int {
         return respositories.count

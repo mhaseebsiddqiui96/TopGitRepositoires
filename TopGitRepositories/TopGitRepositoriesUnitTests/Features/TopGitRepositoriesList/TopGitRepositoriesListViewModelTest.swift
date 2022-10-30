@@ -19,6 +19,7 @@ class TopGitRepositoriesListViewModelTest: XCTestCase {
         XCTAssertEqual(sut.numberOfRepositories, 0)
         XCTAssertEqual(service.fetchRequests.count, 0)
         XCTAssertNil(sut.errMsg.value)
+        XCTAssertEqual(sut.title, "Trending")
     }
 
     func test_viewModelState_onViewLoaded() throws {
