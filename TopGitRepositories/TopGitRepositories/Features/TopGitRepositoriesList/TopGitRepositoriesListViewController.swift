@@ -31,6 +31,10 @@ class TopGitRepositoriesListViewController: UIViewController {
         bindToViewModel()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        rootView.tableView.isSkeletonable = true
+    }
     
     func bindToViewModel() {
      
@@ -42,9 +46,6 @@ class TopGitRepositoriesListViewController: UIViewController {
             
         }
         
-        viewModel.isLoading.bind { _ in
-            
-        }
     }
     
 }

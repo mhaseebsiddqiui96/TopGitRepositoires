@@ -32,12 +32,34 @@ class TopGitRepositoriesListView: UIView {
         addRepoTableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.canShimmer = true
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 200
+    }
+    
+    fileprivate func handleTableViewLoadingState() {
+        self.tableView.displayGradientAnimation()
+    }
+    
+    fileprivate func handleTableViewNotLoadingState() {
+        self.tableView.hideGradientAnimation()        
     }
     
     private func bindings() {
         viewModel.reloadListOfRepositories.bind {[weak self] val in
             if val != nil { DispatchQueue.main.async { self?.tableView.reloadData() }}
         }
+        
+        viewModel.isLoading.bind {[weak self] isLoading in
+            DispatchQueue.main.async {
+                if let isloading = isLoading, isloading {
+                    self?.handleTableViewLoadingState()
+                } else {
+                    self?.handleTableViewNotLoadingState()
+                }
+            }
+        }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -50,7 +72,7 @@ class TopGitRepositoriesListView: UIView {
     
 }
 
-extension TopGitRepositoriesListView: UITableViewDataSource, UITableViewDelegate {
+extension TopGitRepositoriesListView: Skeletonable, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -66,5 +88,10 @@ extension TopGitRepositoriesListView: UITableViewDataSource, UITableViewDelegate
         }
         return cell
     }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> String {
+        return "\(GitRepositoryListCell.self)"
+    }
+
 }
 

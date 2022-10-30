@@ -11,11 +11,13 @@ class GitRepositoryListCell: UITableViewCell {
 
     lazy var imageViewAvatar: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .lightGray
+
+        imageView.backgroundColor = .lightText
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([imageView.heightAnchor.constraint(equalToConstant: 40), imageView.widthAnchor.constraint(equalToConstant: 40)])
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
+        imageView.canShimmer = true
         return imageView
     }()
     
@@ -24,6 +26,7 @@ class GitRepositoryListCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textColor = .darkGray
         label.text = "Haseeb"
+        label.canShimmer = true
         return label
     }()
     
@@ -31,15 +34,19 @@ class GitRepositoryListCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         label.text = "Swift-Repository-101"
+        label.canShimmer = true
+
         return label
     }()
     
     lazy var labelRepoDescription: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 4
+        label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textColor = .darkGray
         label.text = "Some descriptoiom Some descriptoiom, Some descriptoiom, Some descriptoiom"
+        label.canShimmer = true
+
         return label
     }()
     
@@ -48,6 +55,8 @@ class GitRepositoryListCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .darkGray
         label.text = "12"
+        label.canShimmer = true
+
         return label
     }()
     
@@ -56,6 +65,8 @@ class GitRepositoryListCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .darkGray
         label.text = "Swift"
+        label.canShimmer = true
+
         return label
     }()
     
@@ -64,6 +75,8 @@ class GitRepositoryListCell: UITableViewCell {
         starImage.image = UIImage.star
         starImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([starImage.heightAnchor.constraint(equalToConstant: 12), starImage.widthAnchor.constraint(equalToConstant: 12)])
+        starImage.canShimmer = true
+
         return starImage
     }()
     
@@ -74,6 +87,7 @@ class GitRepositoryListCell: UITableViewCell {
         NSLayoutConstraint.activate([view.heightAnchor.constraint(equalToConstant: 12), view.widthAnchor.constraint(equalToConstant: 12)])
         view.layer.cornerRadius = 6
         view.clipsToBounds = true
+        view.canShimmer = true
         return view
     }()
 
@@ -88,61 +102,74 @@ class GitRepositoryListCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageViewAvatar.image = nil
+        self.imageViewAvatar.cancelDownload()
+        self.imageViewAvatar.image = nil
     }
 
     
     private func setupView() {
+        
+        self.canShimmer = true
+        self.contentView.canShimmer = true
         
         let topStack = UIStackView(arrangedSubviews: [labelOwner, labelRepoName])
         topStack.axis = .vertical
         topStack.distribution = .fill
         topStack.alignment = .fill
         topStack.spacing = 8
+        topStack.canShimmer = true
+
         
         let starCountStack = UIStackView(arrangedSubviews: [imageViewStarCount, labelStarCount])
         starCountStack.axis = .horizontal
         starCountStack.distribution = .fill
         starCountStack.alignment = .fill
-        starCountStack.spacing = 4
+        starCountStack.spacing = 8
+        starCountStack.canShimmer = true
+
         
         
         let lanStack = UIStackView(arrangedSubviews: [viewLanIndicator, labelLanguage])
         lanStack.axis = .horizontal
         lanStack.distribution = .fill
         lanStack.alignment = .fill
-        lanStack.spacing = 4
+        lanStack.spacing = 8
+        lanStack.canShimmer = true
         
         let bottomInnerStack = UIStackView(arrangedSubviews: [lanStack, starCountStack])
         bottomInnerStack.axis = .horizontal
         bottomInnerStack.distribution = .fill
         bottomInnerStack.alignment = .fill
         bottomInnerStack.spacing = 32
+        bottomInnerStack.canShimmer = true
         
         let bottomStack = UIStackView(arrangedSubviews: [labelRepoDescription, bottomInnerStack])
         bottomStack.axis = .vertical
         bottomStack.distribution = .fill
         bottomStack.alignment = .leading
         bottomStack.spacing = 20
+        bottomStack.canShimmer = true
         
         let mainRightStack = UIStackView(arrangedSubviews: [topStack, bottomStack])
         mainRightStack.axis = .vertical
         mainRightStack.distribution = .fill
         mainRightStack.alignment = .fill
         mainRightStack.spacing = 12
+        mainRightStack.canShimmer = true
         
         let mainStack = UIStackView(arrangedSubviews: [imageViewAvatar, mainRightStack])
         mainStack.axis = .horizontal
         mainStack.distribution = .fill
         mainStack.alignment = .top
         mainStack.spacing = 8
+        mainStack.canShimmer = true
         
-        addSubview(mainStack)
+        self.contentView.addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-                                     mainStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-                                     mainStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-                                     mainStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20)])
+        NSLayoutConstraint.activate([mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                                     mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                                     mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+                                     mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)])
         
     }
     
@@ -152,6 +179,7 @@ class GitRepositoryListCell: UITableViewCell {
         self.labelRepoName.text = viewModel.repoName
         self.labelStarCount.text = "\(viewModel.starsCount)"
         self.labelRepoDescription.text = viewModel.repoDescription
+        self.imageViewAvatar.downLoadImage(with: viewModel.avtarURL)
     }
     
 }

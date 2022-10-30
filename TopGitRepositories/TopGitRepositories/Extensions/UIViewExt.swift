@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 public extension UIView {
  
@@ -20,5 +21,27 @@ public extension UIView {
         trailingAnchor.constraint(equalTo: other.safeAreaLayoutGuide.trailingAnchor).isActive = true
         topAnchor.constraint(equalTo: other.safeAreaLayoutGuide.topAnchor).isActive = true
         bottomAnchor.constraint(equalTo: other.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    }
+}
+
+
+protocol Skeletonable: SkeletonTableViewDataSource {}
+
+extension UIView {
+    var canShimmer: Bool {
+        set {
+            isSkeletonable = newValue
+        } get {
+            return isSkeletonable
+        }
+    }
+    
+    func displayGradientAnimation() {
+        self.showAnimatedGradientSkeleton()
+    }
+    
+    func hideGradientAnimation() {
+        self.stopSkeletonAnimation()
+        self.hideSkeleton()
     }
 }
