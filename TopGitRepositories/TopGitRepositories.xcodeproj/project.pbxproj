@@ -28,6 +28,7 @@
 		0F8BF4C4290F17B00019C202 /* LocalizeStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BF4C1290F17B00019C202 /* LocalizeStrings.swift */; };
 		0F8BF4C5290F17B00019C202 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BF4C2290F17B00019C202 /* Localizable.swift */; };
 		0F8BF4C7290F1AEB0019C202 /* ErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BF4C6290F1AEB0019C202 /* ErrorTest.swift */; };
+		0F8BF4CA290F2B4C0019C202 /* NoInternetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BF4C9290F2B4C0019C202 /* NoInternetTest.swift */; };
 		0F9A96832909F8F0000F08FB /* URLSessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A96822909F8F0000F08FB /* URLSessionClient.swift */; };
 		0F9A9685290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9684290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift */; };
 		0F9A9688290AF8EF000F08FB /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A9687290AF8EF000F08FB /* Routable.swift */; };
@@ -74,6 +75,7 @@
 		0F8BF4C1290F17B00019C202 /* LocalizeStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizeStrings.swift; sourceTree = "<group>"; };
 		0F8BF4C2290F17B00019C202 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		0F8BF4C6290F1AEB0019C202 /* ErrorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTest.swift; sourceTree = "<group>"; };
+		0F8BF4C9290F2B4C0019C202 /* NoInternetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetTest.swift; sourceTree = "<group>"; };
 		0F9A96822909F8F0000F08FB /* URLSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClient.swift; sourceTree = "<group>"; };
 		0F9A9684290AF8C1000F08FB /* TopGitRepositoryEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGitRepositoryEndpoint.swift; sourceTree = "<group>"; };
 		0F9A9687290AF8EF000F08FB /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -262,6 +264,14 @@
 			path = LocalizeStrings;
 			sourceTree = "<group>";
 		};
+		0F8BF4C8290F2B2E0019C202 /* NoInternetView */ = {
+			isa = PBXGroup;
+			children = (
+				0F8BF4C9290F2B4C0019C202 /* NoInternetTest.swift */,
+			);
+			path = NoInternetView;
+			sourceTree = "<group>";
+		};
 		0F9A9686290AF8E0000F08FB /* Endpoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +301,7 @@
 		0F9A968D290B0A37000F08FB /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0F8BF4C8290F2B2E0019C202 /* NoInternetView */,
 				0F9A968E290B0A83000F08FB /* TopGitRepositoriesList */,
 			);
 			path = Features;
@@ -502,6 +513,7 @@
 			files = (
 				0FCD473B2908763F00BC8C30 /* TopGitRepositoriesServiceTest.swift in Sources */,
 				0FCD474A2909E1C200BC8C30 /* URLSessionClientTest.swift in Sources */,
+				0F8BF4CA290F2B4C0019C202 /* NoInternetTest.swift in Sources */,
 				0FC09824290E8D4F00B09F7B /* TopGitRepositoriesListViewControllerTest.swift in Sources */,
 				0F9A968A290AFA4B000F08FB /* TopGitRepositoryEndpointTest.swift in Sources */,
 				0F8BF4C7290F1AEB0019C202 /* ErrorTest.swift in Sources */,
