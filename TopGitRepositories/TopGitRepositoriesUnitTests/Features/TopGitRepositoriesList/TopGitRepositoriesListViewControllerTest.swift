@@ -51,7 +51,13 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
 
         viewModelSpy.numberOfReposToReturn = 20
         viewModelSpy.reloadListOfRepositories.value = ()// this will call tableview.reload method to reload the list and display
+       
+        let expectation = expectation(description: "Test")
+        DispatchQueue.main.async {
+            expectation.fulfill()
+        }
         
+        self.waitForExpectations(timeout: 1, handler: nil)
         XCTAssertEqual(sut.rootView.tableView.numberOfRows(inSection: 0), 20)
     }
     

@@ -17,7 +17,7 @@ class TopGitRepositoryEndpointTest: XCTestCase {
         XCTAssertNotNil(url)
         XCTAssertEqual(url?.scheme, "https")
         XCTAssertEqual(url?.host, "api.github.com")
-        XCTAssertEqual(url?.path, "/search/repositories?q=language=+sort:stars")
+        XCTAssertEqual(url?.path, "/search/repositories")
     }
 
 }

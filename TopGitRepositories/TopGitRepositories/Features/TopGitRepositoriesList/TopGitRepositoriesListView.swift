@@ -36,7 +36,7 @@ class TopGitRepositoriesListView: UIView {
     
     private func bindings() {
         viewModel.reloadListOfRepositories.bind {[weak self] val in
-            if val != nil { self?.tableView.reloadData() }
+            if val != nil { DispatchQueue.main.async { self?.tableView.reloadData() }}
         }
     }
     

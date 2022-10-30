@@ -18,13 +18,13 @@ enum TopGitRepositoryEndpoint: Routable {
     var path: String {
         switch self {
         case .getTopGitRepos:
-            return  "/search/repositories?q=language=+sort:stars"
+            return  "/search/repositories"
         }
     }
     var params: APIParams? {
         switch self {
         case .getTopGitRepos:
-            return nil
+            return ["q": "language=+sort:stars"]
         }
     }
     

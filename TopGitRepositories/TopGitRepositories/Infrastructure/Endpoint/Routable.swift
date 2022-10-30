@@ -45,7 +45,7 @@ extension Routable {
         var url = URL(string: baseURL)!
         
         // Appending Query Item if it is get request
-        if method == .get {
+        if method == .get, params != nil {
             url.appendingQueryItems(params: params ?? [:])
         }
         
@@ -66,6 +66,7 @@ extension Routable {
             }
             
         }
+        
         return urlRequest
         
     }

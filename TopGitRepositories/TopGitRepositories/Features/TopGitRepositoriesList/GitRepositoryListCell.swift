@@ -36,7 +36,7 @@ class GitRepositoryListCell: UITableViewCell {
     
     lazy var labelRepoDescription: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 4
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textColor = .darkGray
         label.text = "Some descriptoiom Some descriptoiom, Some descriptoiom, Some descriptoiom"
@@ -61,7 +61,7 @@ class GitRepositoryListCell: UITableViewCell {
     
     lazy var imageViewStarCount: UIImageView = {
         let starImage = UIImageView()
-        starImage.backgroundColor = .yellow
+        starImage.image = UIImage.star
         starImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([starImage.heightAnchor.constraint(equalToConstant: 12), starImage.widthAnchor.constraint(equalToConstant: 12)])
         return starImage
@@ -72,6 +72,8 @@ class GitRepositoryListCell: UITableViewCell {
         view.backgroundColor = .yellow
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([view.heightAnchor.constraint(equalToConstant: 12), view.widthAnchor.constraint(equalToConstant: 12)])
+        view.layer.cornerRadius = 6
+        view.clipsToBounds = true
         return view
     }()
 
@@ -121,7 +123,7 @@ class GitRepositoryListCell: UITableViewCell {
         bottomStack.axis = .vertical
         bottomStack.distribution = .fill
         bottomStack.alignment = .leading
-        bottomStack.spacing = 16
+        bottomStack.spacing = 20
         
         let mainRightStack = UIStackView(arrangedSubviews: [topStack, bottomStack])
         mainRightStack.axis = .vertical
@@ -138,9 +140,9 @@ class GitRepositoryListCell: UITableViewCell {
         addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-                                     mainStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 16),
-                                     mainStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-                                     mainStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16)])
+                                     mainStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+                                     mainStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+                                     mainStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20)])
         
     }
     
