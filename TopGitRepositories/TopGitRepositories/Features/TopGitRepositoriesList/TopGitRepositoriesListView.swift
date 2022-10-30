@@ -8,6 +8,8 @@
 import UIKit
 
 class TopGitRepositoriesListView: UIView {
+    
+    let viewModel: TopGitRepositoriesListViewModelProtocol
 
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -16,8 +18,15 @@ class TopGitRepositoriesListView: UIView {
         return tableView
     }()
     
-    init() {
+   
+    init(viewModel: TopGitRepositoriesListViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
+
+        initialSetup()
+    }
+    
+    fileprivate func initialSetup() {
         backgroundColor = .white
         addRepoTableView()
         tableView.delegate = self
@@ -40,7 +49,7 @@ extension TopGitRepositoriesListView: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel.numberOfRepositories
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

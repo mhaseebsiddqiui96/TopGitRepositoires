@@ -31,8 +31,28 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
 
     }
     
+    func test_viewType_shouldBeTopGitRespositoryListView() throws {
+        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
+
+        let _ = sut.view
+        
+        XCTAssertNotNil(sut.view as? TopGitRepositoriesListView)
+    }
     
-    
+    func test_reloadListOfRepositories_displaysListOfRepos() throws {
+        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
+
+        let _ = sut.view
+
+        viewModelSpy.reloadListOfRepositories.value = ()
+
+        XCTAssertEqual(sut.rootView.tableView.dataSource?.numberOfSections?(in: sut.rootView.tableView), 1)
+        XCTAssertEqual(sut.rootView.tableView.dataSource?.tableView(sut.rootView.tableView, numberOfRowsInSection: 0), 10)
+
+    }
+
     //MARK: - Helpers
     class TopGitRepositoriesListViewModelSpy: TopGitRepositoriesListViewModelProtocol {
        

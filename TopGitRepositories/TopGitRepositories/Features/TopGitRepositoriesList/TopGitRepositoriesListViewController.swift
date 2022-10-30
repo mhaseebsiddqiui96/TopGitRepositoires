@@ -10,6 +10,7 @@ import UIKit
 class TopGitRepositoriesListViewController: UIViewController {
     
     let viewModel: TopGitRepositoriesListViewModelProtocol
+    var rootView: TopGitRepositoriesListView { return self.view as! TopGitRepositoriesListView } // I know its a forced unwrap but we can be confident as we have test written for this scenario
     
     init(viewModel: TopGitRepositoriesListViewModelProtocol) {
         self.viewModel = viewModel
@@ -21,7 +22,7 @@ class TopGitRepositoriesListViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = TopGitRepositoriesListView()
+        self.view = TopGitRepositoriesListView(viewModel: self.viewModel)
     }
 
     override func viewDidLoad() {
