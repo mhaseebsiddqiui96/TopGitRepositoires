@@ -38,9 +38,16 @@ class TopGitRepositoriesListViewController: UIViewController {
     }
     
     func bindToViewModel() {
-     
-        viewModel.errMsg.bind { _ in
-            
+        viewModel.errMsg.bind {[weak self] msg in
+            if let msg = msg { self?.displayErrorMessage(msg) }
+        }
+    }
+    
+    func displayErrorMessage(_ message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: LocalizedStrings.errorTitle.localized, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: LocalizedStrings.okayTitle.localized, style: .default))
+            self.present(alert, animated: true)
         }
         
     }

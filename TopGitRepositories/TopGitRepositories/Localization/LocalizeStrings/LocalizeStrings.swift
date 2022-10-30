@@ -12,6 +12,8 @@ enum LocalizedStrings: String, Localizable {
     case retryTitle = "retry_title"
     case noInternetTitle = "no_internet_title"
     case noInternetDescription = "no_internet_description"
+    case errorTitle = "error_title"
+    case okayTitle = "okay_title"
     
     var tableName: String {
         return "Localized"

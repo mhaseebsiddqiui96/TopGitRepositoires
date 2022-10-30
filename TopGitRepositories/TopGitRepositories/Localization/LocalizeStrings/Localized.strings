@@ -3,3 +3,5 @@
 "retry_title" = "Retry";
 "no_internet_title" = "Something went wrong!";
 "no_internet_description" = "An alien probably blocking your signal.";
+"error_title" = "Error";
+"okay_title" = "Okay";
