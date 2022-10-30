@@ -46,11 +46,13 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
 
         let _ = sut.view
 
-        viewModelSpy.reloadListOfRepositories.value = ()
-
         XCTAssertEqual(sut.rootView.tableView.dataSource?.numberOfSections?(in: sut.rootView.tableView), 1)
-        XCTAssertEqual(sut.rootView.tableView.dataSource?.tableView(sut.rootView.tableView, numberOfRowsInSection: 0), viewModelSpy.numberOfReposToReturn)
+        XCTAssertEqual(sut.rootView.tableView.numberOfRows(inSection: 0), 10)
 
+        viewModelSpy.numberOfReposToReturn = 20
+        viewModelSpy.reloadListOfRepositories.value = ()// this will call tableview.reload method to reload the list and display
+        
+        XCTAssertEqual(sut.rootView.tableView.numberOfRows(inSection: 0), 20)
     }
     
     func test_reloadListOfRepositories_displaysCellWithCorrectInfo() throws {
