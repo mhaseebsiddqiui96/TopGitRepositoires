@@ -27,6 +27,27 @@ class TopGitRepositoriesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewLoaded()
+        bindToViewModel()
+    }
+    
+    
+    func bindToViewModel() {
+     
+        viewModel.notConnectedToInternet.bind { _ in
+            
+        }
+        
+        viewModel.reloadListOfRepositories.bind { _ in
+            
+        }
+        
+        viewModel.errMsg.bind { _ in
+            
+        }
+        
+        viewModel.isLoading.bind { _ in
+            
+        }
     }
     
 }

@@ -18,6 +18,21 @@ class TopGitRepositoriesListViewControllerTest: XCTestCase {
         XCTAssertEqual(viewModelSpy.viewLoadedCalled, 1)
     }
     
+    func test_viewDidLoad_bindsToViewModel() throws {
+        let viewModelSpy = TopGitRepositoriesListViewModelSpy()
+        let sut = TopGitRepositoriesListViewController(viewModel: viewModelSpy)
+
+        let _ = sut.view
+        
+        XCTAssertEqual(viewModelSpy.errMsg.listner.count, 1)
+        XCTAssertEqual(viewModelSpy.reloadListOfRepositories.listner.count, 1)
+        XCTAssertEqual(viewModelSpy.notConnectedToInternet.listner.count, 1)
+        XCTAssertEqual(viewModelSpy.isLoading.listner.count, 1)
+
+    }
+    
+    
+    
     //MARK: - Helpers
     class TopGitRepositoriesListViewModelSpy: TopGitRepositoriesListViewModelProtocol {
        
